@@ -38,9 +38,17 @@ router.get('/', (req, res) => {
 // the id, which `BlogPosts` will create. This endpoint should
 // send a 400 error if the post doesn't contain
 // `title`, `content`, and `author`
-// router.post('/', jsonParser, (req, res) => {
-// 	const requiredFields = ['title', 'content', 'author'];
-// })
+router.post('/', jsonParser, (req, res) => {
+	const requiredFields = ['title', 'content', 'author'];
+	for(let i=0; i<requiredFields.length; i++){
+		if (!(requiredFields[i] in req.body)){
+			console.error(`Missing ${requiredFields[i]} in body`)
+			return res.status(400).send(`Missing "${requiredFields[i]}" in body`)
+		}
+	}
+	const blogItem = BlogPosts.create(req.body.title, req.body.content, req.body.author);
+	res.status(201).json(blogItem);
+});
 
 
 // add endpoint for PUT requests to update blogposts. it should
@@ -50,6 +58,39 @@ router.get('/', (req, res) => {
 // following required fields are in request body: `id`, `title`,
 // `content`, `author`, `publishDate`
 
+router.put('/:id', jsonParser, (req, res) => {
+	const requiredFields = ['id', 'title', 'content', 'author', 'publishDate'];
+	for(let i=0; i<requiredFields.length; i++){
+		if(!(requiredFields[i] in req.body)){
+			console.error(`Missing ${requiredFields[i]} in body`)
+			return res.status(400).send(`Missing ${requiredFields[i]} in body`)
+		}
+	}
+	if(req.params.id !== req.body.id){
+		console.error(`Request path id (${req.params.id}) and request body id
+      (${req.body.id}) must match`);
+
+		return res.status(400).send(`Request path id (${req.params.id}) and request body id
+      (${req.body.id}) must match`);
+	}
+	console.log(`Updating blog ${req.params.id}`);
+	BlogPosts.update({
+		id: req.params.id,
+		title: req.body.title,
+		content: req.body.content,
+		author: req.body.author,
+		publishDate: req.body.publishDate
+	});
+	res.status(204).end();
+})
+
 // add endpoint for DELETE requests. These requests should
 // have an id as a URL path variable and call
 // `BlogPosts.delete()`
+router.delete('/:id', (req, res) =>{
+	BlogPosts.delete(req.params.id);
+	console.log(`Deleting blogpost ${req.params.id}`);
+	res.status(204).end();
+})
+
+module.exports = router;
