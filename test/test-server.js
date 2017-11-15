@@ -72,7 +72,7 @@ describe('Blog Posts', function() {
         res.body.id.should.not.be.null;
         // response should be deep equal to `newItem` from above if we assign
         // `id` to it from `res.body.id`
-        res.body.should.deep.equal(Object.assign(newItem, {id: res.body.id}));
+       res.body.should.deep.equal(Object.assign(newItem, {id: res.body.id}, {publishDate: res.body.publishDate}));
       });
   });
 
@@ -91,23 +91,24 @@ describe('Blog Posts', function() {
     const updateData = {
       title: 'foo',
       content: 'string',
-      author: 'billy'
+      author: 'billy',
+      publishDate: '103085'
     };
 
     return chai.request(app)
       // first have to get so we have an idea of object to update
       .get('/blog-posts')
       .then(function(res) {
-        updateData.id = res.body[0].id;
-        updateData.publishDate=res.body[0].publishDate;
+        updateData.id = res.body[0].id
+        // updateData.publishDate=res.body[0].publishDate
         // this will return a promise whose value will be the response
         // object, which we can inspect in the next `then` back. Note
         // that we could have used a nested callback here instead of
         // returning a promise and chaining with `then`, but we find
         // this approach cleaner and easier to read and reason about.
         return chai.request(app)
-          .put(`/blog-posts/${updateData.id}`);
-          .put(`/blog-posts/${updateData.publishDate}`);
+          .put(`/blog-posts/${updateData.id}`)
+          // .put(`/blog-posts/${updateData.publishDate}`)
           .send(updateData);
       })
       // prove that the PUT request has right status code

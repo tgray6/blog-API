@@ -1,6 +1,6 @@
 language: node_js
 node_js: node
-deploy:
-  app: https://fathomless-shore-10273.herokuapp.com
-  provider: heroku
-  api_key: 894e72df-8b04-411a-899a-d6811f203a2e
+# deploy:
+#   app: https://fathomless-shore-10273.herokuapp.com
+#   provider: heroku
+#   api_key: 894e72df-8b04-411a-899a-d6811f203a2e
