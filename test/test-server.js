@@ -47,7 +47,7 @@ describe('Blog Posts', function() {
         res.body.length.should.be.at.least(1);
         // each item should be an object with key/value pairs
         // for `title`, `content` and `author`.
-        const expectedKeys = ['title', 'content', 'author'];
+        const expectedKeys = ['title', 'content', 'author', "id", "publishDate"];
         res.body.forEach(function(item) {
           item.should.be.a('object');
           item.should.include.keys(expectedKeys);
