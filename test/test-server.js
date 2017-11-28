@@ -54,6 +54,7 @@ describe('Blog Posts', function() {
         });
       });
   });
+});
 
   // test strategy:
   //  1. make a POST request with data for a new item
@@ -64,7 +65,7 @@ describe('Blog Posts', function() {
 
 
 
-  
+
 //   it('should add a blog item on POST', function() {
 //     const newItem = {title: 'foo', content: "string", author: "billy"};
 //     return chai.request(app)
