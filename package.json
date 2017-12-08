@@ -17,10 +17,11 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "mongoose": "^4.13.6",
     "morgan": "^1.9.0",
     "uuid": "^3.1.0"
   },
-    "repository": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/tgray6/blog-API.git"
   },
